@@ -2,6 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Package2 } from "lucide-react";
 import { NavItem } from "./NavItem";
+import { motion } from "framer-motion";
+
+const menuItemVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: { opacity: 1, x: 0 },
+};
 
 export const MobileSheet = ({ navItems }) => (
   <Sheet>
@@ -20,10 +26,18 @@ export const MobileSheet = ({ navItems }) => (
           <Package2 className="h-6 w-6 text-pink-500" />
           <span>Your Pink App</span>
         </NavItem>
-        {navItems.map((item) => (
-          <NavItem key={item.to} to={item.to}>
-            {item.title}
-          </NavItem>
+        {navItems.map((item, index) => (
+          <motion.div
+            key={item.to}
+            variants={menuItemVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: index * 0.1 }}
+          >
+            <NavItem to={item.to}>
+              {item.title}
+            </NavItem>
+          </motion.div>
         ))}
       </nav>
     </SheetContent>
